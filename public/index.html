@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en" ng-app="myApp">
+<head>
+  <meta charset="utf-8">
+  <title>My AngularJS App</title>
+  <!-- <link rel="stylesheet" href="css/app.css"/> -->
+</head>
+  <!-- In production use:
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
+  -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+  <!-- load angular -->
+  <script src="Oauth.js"></script>
+  <script src="core.js"></script>
+<body ng-controller="MainCtrl">
+    <div ng-hide = "logged.loggedin">
+    <a href="#login"> Login </a>
+    <a href="#register"> Register </a>
+    </div>
+    <div ng-view></div>
+
+</body>
+</html>

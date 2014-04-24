@@ -1,0 +1,18 @@
+  
+  <div class="error" ng-model="errors">{{errors}}</div>
+  <form id="placeholder__form" ng-hide="sended">
+  Username/Email:<input id="placeholder__username" name="username" type="text" required="required" ng-model="user.username" maxlength="50"/>
+  <br>
+  Password:<input type="password" name="password" placeholder="enter password" minlength="8" ng-model="user.password"/>
+  <br>
+    <button type="submit" class="btn btn-primary btn-lg" ng-click="submit()">login </button>
+  </form>
+  <div id="placeholder__sended" ng-show="sended">
+    <p>Welcome {{logged.fullname}}!!</p>
+    <div id="provider_verification" ng-hide = "logged.verified">
+    <p>Please verify your account by </p>
+    <input type="button" value="linkedin" ng-click="verify('linkedin')"></input>
+    <p> or </p>
+    <input type="button" value="salesforce" ng-click="verify('salesforce')"></input>
+    </div>
+  </div>
