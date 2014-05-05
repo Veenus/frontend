@@ -2,8 +2,8 @@
 <html lang="en" ng-app="myApp">
 <head>
   <meta charset="utf-8">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
   <title>My AngularJS App</title>
-  <!-- <link rel="stylesheet" href="css/app.css"/> -->
 </head>
   <!-- In production use:
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
@@ -13,12 +13,18 @@
   <!-- load angular -->
   <script src="Oauth.js"></script>
   <script src="core.js"></script>
+  <script src="ui-bootstrap-tpls-0.9.0.min.js"></script>
 <body ng-controller="MainCtrl">
-    <div ng-hide = "logged.loggedin">
-    <a href="#login"> Login </a>
-    <a href="#register"> Register </a>
-    </div>
-    <div ng-view></div>
-
+ <div class="container">
+ <h1> Marshal </h1>
+  <div ng-hide = "logged.loggedin">
+    <ul class="nav nav-pills" id="myTab">
+      <li class="active"><a href="#login" data-toggle="tab"> Login </a></li>
+      <li><a href="#register" data-toggle="tab"> Register </a></li>
+    </ul>
+  </div>
+  <br>
+  <div ng-view></div>
+  </div>
 </body>
 </html>

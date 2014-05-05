@@ -54,8 +54,10 @@ function LoginCtrl($scope, $http) {
         $scope.logged.account_href = data.href;
         $scope.logged.fullname = data.fullName;
         console.log(data.customData);
-        if(data.customData.linkedin || data.customData.salesforce)
-          $scope.logged.verified = true;
+        if(data.customData.linkedin)
+          $scope.logged.verified.linkedin = true;
+        if(data.customData.salesforce)
+          $scope.logged.verified.salesforce = true;
 			})
 			.error(function(data) {
 				console.log('Error: ' + data.userMessage);
@@ -72,7 +74,7 @@ function MainCtrl($scope, $http) {
 	$scope.logged = {loggedin: false,
     fullname: "",
     account_href: "",
-    verified: false}
+    verified: {linkedin:false, salesforce:false}}
   $scope.verify = function(value) {
     OAuth.initialize('QlsyFTooT381B3aXsPNA054bsXA');
     OAuth.popup(value, function(error, result) {
@@ -80,19 +82,19 @@ function MainCtrl($scope, $http) {
         console.log(error);
       else {
         console.log(result);
-        result.account_href = $scope.logged.account_href;
-        result.provider = value;
-        $http.post('/api/v1/account', result)
+        map = {};
+        map.provider_details = result;
+        map.account_href = $scope.logged.account_href;
+        map.provider = value;
+        $http.post('/api/v1/account', map)
           .success(function(data){
             console.log(data);
-            $scope.logged.verified = true;
+            $scope.logged.verified[value] = true;
           })
           .error(function(data) {
             console.log(data);
           });
       }
-      //handle error with error
-      //use result.access_token in your API request
     });
   }
 }

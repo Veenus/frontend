@@ -3,7 +3,7 @@
 	// set up ========================
 	var express  = require('express');
 	var app      = express(); 								// create our app w/ express
-	var mongoose = require('mongoose'); 					// mongoose for mongodb
+	// var mongoose = require('mongoose'); 					// mongoose for mongodb
 
 	var stormpath = require('stormpath');
 
@@ -25,7 +25,7 @@
 
 	// configuration =================
 
-	mongoose.connect('mongodb://node:node@mongo.onmodulus.net:27017/uwO3mypu'); 	// connect to mongoDB database on modulus.io
+	// mongoose.connect('mongodb://node:node@mongo.onmodulus.net:27017/uwO3mypu'); 	// connect to mongoDB database on modulus.io
 
 	app.configure(function() {
 		app.use(express.static(__dirname + '/public')); 		// set the static files location /public/img will be /img for users
@@ -34,27 +34,14 @@
 		app.use(express.methodOverride()); 						// simulate DELETE and PUT
 	});
 
-	// define model =================
-	var Todo = mongoose.model('Todo', {
-		text : String
-	});
+	// // define model =================
+	// var Todo = mongoose.model('Todo', {
+	// 	text : String
+	// });
 
 	// routes ======================================================================
 
-	// api ---------------------------------------------------------------------
-	// get all todos
-	app.get('/api/todos', function(req, res) {
-
-		// use mongoose to get all todos in the database
-		Todo.find(function(err, todos) {
-
-			// if there is an error retrieving, send the error. nothing after res.send(err) will execute
-			if (err)
-				res.send(error, JSON.stringify({error: true}));
-
-			res.json(todos); // return all todos in JSON format
-		});
-	});
+	// api --------------------------------------------------------------------
 
 	// register user
 	app.post('/api/v1/register', function(req, res) {
@@ -94,17 +81,14 @@
 			  	}
 			  	else {
 			  		client.getAccount(result.account.href, {expand:'customData'},function (err, account){
-				  		if (err) throw err;
-					    console.log(account);
-					    res.json(account);
-				  	// 	if(err) {
-				  	// 		console.log(err); 
-				  	// 	    res.send(400,err);
-				  	// 	}
-				  	// 	else {
-				  	// 		console.log(account.customData);
-							// res.json(account);
-					  // 	}
+				  		if(err) {
+				  			console.log(err); 
+				  		    res.send(400,err);
+				  		}
+				  		else {
+				  			console.log(account.customData);
+							res.json(account);
+					  	}
 				  	});
 				}
             });
@@ -121,42 +105,29 @@
 		  		    res.send(400,err);
 		  		}
 		  		else {
-		  			console.log(account.customData);
-		  			account.customData[provider] = {};
-		  			map = {}
-		  			map['oauth_token'] = req.body.oauth_token;
-		  			map['oauth_token_secret'] = req.body.oauth_token_secret;
-		  			account.customData[provider] = map;
-		  			account.save(function onSave(err, savedAccount) {
-						if(err) {
+		  			account.getCustomData(function(err, cd) {
+		  				if(err) {
 				  			console.log(err); 
 				  		    res.send(400,err);
 				  		}
-				  		else{
-						    console.log(savedAccount);
-					        res.send(200); 
-				  		}
-			  		});
+				  		else {
+			  				cd[provider] = req.body.provider_details;
+			  				cd.save(function(err,cd) {
+			  					if(err) {
+						  			console.log(err); 
+						  		    res.send(400,err);
+						  		}
+						  		else{
+								    console.log(cd);
+							        res.send(200); 
+						  		}
+			  				});
+			  			}
+		  			});
 			  	}
 		  	});
 	    });
 
-	// delete a todo
-	app.delete('/api/todos/:todo_id', function(req, res) {
-		Todo.remove({
-			_id : req.params.todo_id
-		}, function(err, todo) {
-			if (err)
-				res.send(err);
-
-			// get and return all the todos after you create another
-			Todo.find(function(err, todos) {
-				if (err)
-					res.send(err)
-				res.json(todos);
-			});
-		});
-	});
 
 	// application -------------------------------------------------------------
 	app.get('*', function(req, res) {

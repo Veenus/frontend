@@ -1,23 +1,35 @@
-<div class="error" ng-model="errors">{{errors}}</div>
-  <form id="placeholder__registerform" ng-hide="sended">
-    <label for="placeholder__firstname" class="placeholder__label">First Name:</label>
-    <input id="placeholder__firstname" name="firstname" type="text" required="required" ng-model="user.givenName" maxlength="20"/>
-    <br>
-    <label for="placeholder__lastname" class="placeholder__label">Last Name:</label>
-    <input id="placeholder__lastname" name="lastname" type="text" required="required" ng-model="user.surname" maxlength="20"/>
-    <br>
-    <label for="placeholder__email" class="placeholder__label">E-mail:</label>
-    <input id="placeholder__email" name="email" type="email" required="required" ng-model="user.email"/>
-    <br>
-    <label for="placeholder__password" class="placeholder__label">Password:</label>
-    <input type="password" name="password" placeholder="enter password" minlength="6" ng-model="user.password"/>
-    <br>
-    <!-- <label for="placeholder__confirmpassword" class="placeholder__label">Confirm Password:</label>
-    <input type="password" name="password" placeholder="enter password" minlength="6" ng-model="user.repassword" match="user.password"/>
-    <br> -->
-    <button type="submit" class="btn btn-primary btn-lg" ng-click="submit()">Register</button>
+  <div class="has-error help-block form-control" ng-model="errors" ng-show = "errors">{{errors}}</div>
+  <form role="form" ng-hide="sended">
+    <div class="row">
+      <div class="form-group col-xs-5 col-lg-3">
+        <label for="code">First Name</label>
+          <input type="text" class="form-control" required="required" ng-model="user.givenName"/>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-xs-5 col-lg-3">
+        <label for="code">Last Name</label>
+          <input type="text" class="form-control" required="required" ng-model="user.surname"/>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-xs-5 col-lg-3">
+        <label for="code">Email</label>
+          <input type="email" class="form-control" required="required" ng-model="user.email"/>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-xs-5 col-lg-3 ">
+        <label for="code">Password</label>
+          <input type="password" class="form-control input-normal" required="required" ng-model="user.password"/>
+      </div>
+    </div>
+    <div class="row">
+      <button type="submit" class="btn btn-default" style="margin-left:15px" ng-click="submit()">Register</button>
+    </div>
   </form>
-  <div id="placeholder__sended" ng-show="sended">
+  
+ <div id="placeholder__sended" ng-show="sended">
     <p>Welcome {{logged.fullname}}</p>
     <p>Please Check your inbox and verify your account. Thank You!</p>
   </div>

@@ -1,18 +1,39 @@
   
-  <div class="error" ng-model="errors">{{errors}}</div>
-  <form id="placeholder__form" ng-hide="sended">
-  Username/Email:<input id="placeholder__username" name="username" type="text" required="required" ng-model="user.username" maxlength="50"/>
-  <br>
-  Password:<input type="password" name="password" placeholder="enter password" minlength="8" ng-model="user.password"/>
-  <br>
-    <button type="submit" class="btn btn-primary btn-lg" ng-click="submit()">login </button>
+  <div class="has-error help-block form-control" ng-model="errors" ng-show = "errors">{{errors}}</div>
+  <form role="form" ng-hide="sended">
+    <div class="row">
+      <div class="form-group col-xs-5 col-lg-3">
+        <label for="code">Email</label>
+          <input type="email" class="form-control" required="required" ng-model="user.username"/>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form-group col-xs-5 col-lg-3 ">
+        <label for="code">Password</label>
+          <input type="password" class="form-control input-normal" required="required" ng-model="user.password"/>
+      </div>
+    </div>
+    <div class="row">
+      <button type="submit" class="btn btn-default" style="margin-left:15px" ng-click="submit()">Sign In</button>
+    </div>
   </form>
+  
   <div id="placeholder__sended" ng-show="sended">
     <p>Welcome {{logged.fullname}}!!</p>
-    <div id="provider_verification" ng-hide = "logged.verified">
-    <p>Please verify your account by </p>
-    <input type="button" value="linkedin" ng-click="verify('linkedin')"></input>
-    <p> or </p>
-    <input type="button" value="salesforce" ng-click="verify('salesforce')"></input>
+    <div id="provider_linkedin_verification" ng-hide = "logged.verified.linkedin">
+    <span>Please verify with </span>
+    <input type="button" value="Linkedin" class="btn btn-primary btn-sm" ng-click="verify('linkedin')"></input>
     </div>
+    <div ng-show = "logged.verified.linkedin">
+    <p> You are verified with Linkedin</p>
+    </div>
+    <div id="provider_salesforce_verification" ng-hide = "logged.verified.salesforce">
+    <span>Please verify with </span>
+    <input type="button" value="Salesforce" class="btn btn-primary btn-sm" ng-click="verify('salesforce')"></input>
+    </div>
+    <div ng-show = "logged.verified.salesforce">
+    <p> You are verified with Salesforce</p>
+    </div>
+    
   </div>
